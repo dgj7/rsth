@@ -1,14 +1,11 @@
-# rsth
+# TextHunter, rs
 multi-threaded desktop file search built with Rust.
 
 <table>
 	<tr>
-		<th colspan="3">project status</th>
-	</tr>
-	<tr>
-		<th>state</th>
-		<th>start</th>
-		<th>end</th>
+		<th>project status</th>
+		<th>started</th>
+		<th>ended</th>
 	</tr>
 	<tr>
 		<td>in development</td>
