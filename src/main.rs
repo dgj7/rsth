@@ -1,3 +1,5 @@
+#![windows_subsystem = "windows"]
+
 use winit::{event_loop::EventLoop, event::WindowEvent};
 use winit::window::WindowBuilder;
 
