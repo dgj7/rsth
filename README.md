@@ -16,4 +16,10 @@ multi-threaded desktop file search built with Rust.
 	</tr>
 </table>
 
+## Todo
+* [x] windowing: winit
+* [x] child windows (for each search): Winit can handle this part
+* [ ] controls: find a library that handles controls, cross platform
+* [ ] threading library?
+
 ---
