@@ -54,38 +54,54 @@ impl eframe::App for TextHunter {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.horizontal(|ui| {
-                let name = ui.label("Search for:");
-                ui.text_edit_singleline(&mut self.txt_search_string).labelled_by(name.id);
-                ui.checkbox(&mut self.chk_search_filecontents, "contents?");
-                ui.checkbox(&mut self.chk_search_filenames, "names?");
+                let ilbl_name = ui.label("Search for:");
+                let itxt_search_str = ui.text_edit_singleline(&mut self.txt_search_string).labelled_by(ilbl_name.id);
+                let ichk_search_fc = ui.checkbox(&mut self.chk_search_filecontents, "contents?");
+                let ichk_search_fn = ui.checkbox(&mut self.chk_search_filenames, "names?");
                 ui.separator();
-                ui.checkbox(&mut self.chk_regex, "regex?");
+                let ichk_regex = ui.checkbox(&mut self.chk_regex, "regex?");
                 ui.separator();
-                ui.checkbox(&mut self.chk_case_sensitive, "case-sensitive?");
+                let ichk_case_sensitive = ui.checkbox(&mut self.chk_case_sensitive, "case-sensitive?");
                 ui.separator();
+                let ibtn_search = ui.add(egui::Button::new("Search!"));
 
-                if ui.add(egui::Button::new("Search!")).clicked() {
+                if ibtn_search.clicked() {
                     // todo
                 }
+
+                ichk_search_fc.on_hover_text("check if file contents should be searched");
+                itxt_search_str.on_hover_text("the string to search for");
+                ichk_search_fn.on_hover_text("check if file names should be searched");
+                ichk_regex.on_hover_text("check if search string should be treated as a regular expression");
+                ichk_case_sensitive.on_hover_text("check if search string character case should be matched");
+                ibtn_search.on_hover_text("launch the search; all input fields will be cleared");
             });
 
             ui.horizontal(|ui| {
-                let name = ui.label("In Path:");
-                ui.text_edit_singleline(&mut self.txt_search_path).labelled_by(name.id);// todo: this should be disabled
-                ui.checkbox(&mut self.chk_subdirs, "subdirs?");
+                let ilbl_name = ui.label("In Path:");
+                let itxt_path = ui.text_edit_singleline(&mut self.txt_search_path).labelled_by(ilbl_name.id);// todo: this should be disabled
+                let ichk_subdirs = ui.checkbox(&mut self.chk_subdirs, "subdirs?");
                 ui.separator();
+                let ibtn_browse = ui.add(egui::Button::new("Borwse..."));
 
-                if ui.add(egui::Button::new("Browse...")).clicked() {
+                if ibtn_browse.clicked() {
                     // todo
                 }
+
+                itxt_path.on_hover_text("path in which to search; update this path by clicking on the browse... button");
+                ichk_subdirs.on_hover_text("check if subdirectories should also be searched");
+                ibtn_browse.on_hover_text("select a path to search within");
             });
 
             ui.horizontal(|ui| {
-                ui.disable();
-                ui.checkbox(&mut self.chk_filtered_search, "filtered?");
+                let ichk_filtered = ui.checkbox(&mut self.chk_filtered_search, "filtered?");
                 ui.separator();
-                ui.checkbox(&mut self.chk_regex_filter, "regex filter?");// todo: this should be disabled; enabled when chk_filtered_search is checked
-                ui.text_edit_singleline(&mut self.txt_filter);// todo: this should be disabled; enabled when chk_filtered_search is checked
+                let ichk_regex = ui.checkbox(&mut self.chk_regex_filter, "regex filter?");// todo: this should be disabled; enabled when chk_filtered_search is checked
+                let itxt_filter = ui.text_edit_singleline(&mut self.txt_filter);// todo: this should be disabled; enabled when chk_filtered_search is checked
+
+                ichk_filtered.on_hover_text("check if the search should be filtered");
+                ichk_regex.on_hover_text("check if the filter should be interpreted as a regular expression");
+                itxt_filter.on_hover_text("text to filter the search by");
             });
         });
     }

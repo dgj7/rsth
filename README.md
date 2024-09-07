@@ -26,7 +26,7 @@ multi-threaded desktop file search built with Rust.
 * [x] windowing: winit
 * [x] child windows (for each search): ~~Winit can handle this part~~ egui
 * [x] controls: ~~find a library that handles controls, cross platform~~ egui
-* [ ] add mouse-over tooltips for various input options
+* [x] add mouse-over tooltips for various input options
 * [ ] threading library?
 
 ---
