@@ -43,7 +43,7 @@ impl Default for TextHunter {
             state_chk_case_sensitive: false,
 
             state_txt_search_path: "".to_owned(),
-            state_chk_subdirs: false,
+            state_chk_subdirs: true,
 
             state_chk_filtered_search: false,
             state_chk_regex_filter: false,
@@ -106,7 +106,7 @@ impl eframe::App for TextHunter {
             });
 
             ui.horizontal(|ui| {
-                ui.checkbox(&mut self.state_chk_filtered_search, "filtered?").on_hover_text("check if the search should be filtered");
+                ui.checkbox(&mut self.state_chk_filtered_search, "filtered search?").on_hover_text("check if the search should be filtered");
 
                 if self.state_chk_filtered_search {
                     ui.separator();
