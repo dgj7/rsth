@@ -57,15 +57,22 @@ impl eframe::App for TextHunter {
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.horizontal(|ui| {
                 let resp_lbl_name = ui.label("Search for:");
-                let resp_txt_search_str = ui.text_edit_singleline(&mut self.state_txt_search_string).labelled_by(resp_lbl_name.id);
-                let resp_chk_search_fc = ui.checkbox(&mut self.state_chk_search_filecontents, "contents?");
-                let resp_chk_search_fn = ui.checkbox(&mut self.state_chk_search_filenames, "names?");
+                ui.text_edit_singleline(&mut self.state_txt_search_string)
+                    .labelled_by(resp_lbl_name.id)
+                    .on_hover_text("the string to search for");
+                ui.checkbox(&mut self.state_chk_search_filecontents, "contents?")
+                    .on_hover_text("check if file contents should be searched");
+                ui.checkbox(&mut self.state_chk_search_filenames, "names?")
+                    .on_hover_text("check if file names should be searched");
                 ui.separator();
-                let resp_chk_regex = ui.checkbox(&mut self.state_chk_regex_search, "regex?");
+                ui.checkbox(&mut self.state_chk_regex_search, "regex?")
+                    .on_hover_text("check if search string should be treated as a regular expression");
                 ui.separator();
-                let resp_chk_case_sensitive = ui.checkbox(&mut self.state_chk_case_sensitive, "case-sensitive?");
+                ui.checkbox(&mut self.state_chk_case_sensitive, "case-sensitive?")
+                    .on_hover_text("check if search string character case should be matched");
                 ui.separator();
-                let resp_btn_search = ui.add(egui::Button::new("Search!"));
+                let resp_btn_search = ui.add(egui::Button::new("Search!"))
+                    .on_hover_text("launch the search; all input fields will be cleared");
 
                 if resp_btn_search.clicked() {
                     MessageDialog::new()
@@ -75,21 +82,18 @@ impl eframe::App for TextHunter {
                         .show_alert()
                         .unwrap();
                 }
-
-                resp_txt_search_str.on_hover_text("the string to search for");
-                resp_chk_search_fc.on_hover_text("check if file contents should be searched");
-                resp_chk_search_fn.on_hover_text("check if file names should be searched");
-                resp_chk_regex.on_hover_text("check if search string should be treated as a regular expression");
-                resp_chk_case_sensitive.on_hover_text("check if search string character case should be matched");
-                resp_btn_search.on_hover_text("launch the search; all input fields will be cleared");
             });
 
             ui.horizontal(|ui| {
                 let resp_lbl_name = ui.label("In Path:");
-                let resp_txt_path = ui.add_enabled(false, egui::TextEdit::singleline(&mut self.state_txt_search_path)).labelled_by(resp_lbl_name.id);
-                let resp_chk_subdirs = ui.checkbox(&mut self.state_chk_subdirs, "subdirs?");
+                ui.add_enabled(false, egui::TextEdit::singleline(&mut self.state_txt_search_path))
+                    .labelled_by(resp_lbl_name.id)
+                    .on_hover_text("path in which to search; update this path by clicking on the browse... button");
+                ui.checkbox(&mut self.state_chk_subdirs, "subdirs?")
+                    .on_hover_text("check if subdirectories should also be searched");
                 ui.separator();
-                let resp_btn_browse = ui.add(egui::Button::new("Browse..."));
+                let resp_btn_browse = ui.add(egui::Button::new("Browse..."))
+                    .on_hover_text("select a path to search within");
 
                 if resp_btn_browse.clicked() {
                     MessageDialog::new()
@@ -99,10 +103,6 @@ impl eframe::App for TextHunter {
                             .show_alert()
                             .unwrap();
                 }
-
-                resp_txt_path.on_hover_text("path in which to search; update this path by clicking on the browse... button");
-                resp_chk_subdirs.on_hover_text("check if subdirectories should also be searched");
-                resp_btn_browse.on_hover_text("select a path to search within");
             });
 
             ui.horizontal(|ui| {
