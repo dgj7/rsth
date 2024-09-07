@@ -1,5 +1,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window
 
+use native_dialog::MessageDialog;
+use native_dialog::MessageType;
 use eframe::egui;
 
 fn main() -> eframe::Result {
@@ -66,7 +68,12 @@ impl eframe::App for TextHunter {
                 let ibtn_search = ui.add(egui::Button::new("Search!"));
 
                 if ibtn_search.clicked() {
-                    // todo
+                    MessageDialog::new()
+                        .set_type(MessageType::Info)
+                        .set_title("Todo: implement search")
+                        .set_text("implement search!")
+                        .show_alert()
+                        .unwrap();
                 }
 
                 ichk_search_fc.on_hover_text("check if file contents should be searched");
@@ -79,15 +86,18 @@ impl eframe::App for TextHunter {
 
             ui.horizontal(|ui| {
                 let ilbl_name = ui.label("In Path:");
-                //let itxt_path = ui.add_enabled(false, &mut self.txt_search_path);
                 let itxt_path = ui.add_enabled(false, egui::TextEdit::singleline(&mut self.txt_search_path)).labelled_by(ilbl_name.id);
-                //let itxt_path = ui.text_edit_singleline(&mut self.txt_search_path).labelled_by(ilbl_name.id);// todo: this should be disabled
                 let ichk_subdirs = ui.checkbox(&mut self.chk_subdirs, "subdirs?");
                 ui.separator();
-                let ibtn_browse = ui.add(egui::Button::new("Borwse..."));
+                let ibtn_browse = ui.add(egui::Button::new("Browse..."));
 
                 if ibtn_browse.clicked() {
-                    // todo
+                    MessageDialog::new()
+                            .set_type(MessageType::Info)
+                            .set_title("Todo: implement browse")
+                            .set_text("implement browse!")
+                            .show_alert()
+                            .unwrap();
                 }
 
                 itxt_path.on_hover_text("path in which to search; update this path by clicking on the browse... button");
@@ -100,6 +110,16 @@ impl eframe::App for TextHunter {
                 ui.separator();
                 let ichk_regex = ui.checkbox(&mut self.chk_regex_filter, "regex filter?");// todo: this should be disabled; enabled when chk_filtered_search is checked
                 let itxt_filter = ui.text_edit_singleline(&mut self.txt_filter);// todo: this should be disabled; enabled when chk_filtered_search is checked
+
+                if ichk_filtered.clicked() {
+                    // todo: this needs to enable/disable filter and regex chk
+                    MessageDialog::new()
+                        .set_type(MessageType::Info)
+                        .set_title("checkbox status change")
+                        .set_text(&format!("format state: {}", self.chk_filtered_search))
+                        .show_alert()
+                        .unwrap();
+                }
 
                 ichk_filtered.on_hover_text("check if the search should be filtered");
                 ichk_regex.on_hover_text("check if the filter should be interpreted as a regular expression");
