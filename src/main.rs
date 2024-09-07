@@ -21,7 +21,7 @@ struct TextHunter {
     state_txt_search_string: String,
     state_chk_search_filecontents: bool,
     state_chk_search_filenames: bool,
-    state_chk_regex: bool,
+    state_chk_regex_search: bool,
     state_chk_case_sensitive: bool,
 
     state_txt_search_path: String,
@@ -39,7 +39,7 @@ impl Default for TextHunter {
             state_txt_search_string: "".to_owned(),
             state_chk_search_filecontents: true,
             state_chk_search_filenames: true,
-            state_chk_regex: false,
+            state_chk_regex_search: false,
             state_chk_case_sensitive: false,
 
             state_txt_search_path: "".to_owned(),
@@ -61,7 +61,7 @@ impl eframe::App for TextHunter {
                 let resp_chk_search_fc = ui.checkbox(&mut self.state_chk_search_filecontents, "contents?");
                 let resp_chk_search_fn = ui.checkbox(&mut self.state_chk_search_filenames, "names?");
                 ui.separator();
-                let resp_chk_regex = ui.checkbox(&mut self.state_chk_regex, "regex?");
+                let resp_chk_regex = ui.checkbox(&mut self.state_chk_regex_search, "regex?");
                 ui.separator();
                 let resp_chk_case_sensitive = ui.checkbox(&mut self.state_chk_case_sensitive, "case-sensitive?");
                 ui.separator();
@@ -106,24 +106,13 @@ impl eframe::App for TextHunter {
             });
 
             ui.horizontal(|ui| {
-                let resp_chk_filtered = ui.checkbox(&mut self.state_chk_filtered_search, "filtered?");
-                ui.separator();
-                let resp_chk_regex = ui.checkbox(&mut self.state_chk_regex_filter, "regex filter?");// todo: this should be disabled; enabled when state_chk_filtered_search is checked
-                let resp_txt_filter = ui.text_edit_singleline(&mut self.state_txt_filter);// todo: this should be disabled; enabled when state_chk_filtered_search is checked
+                ui.checkbox(&mut self.state_chk_filtered_search, "filtered?").on_hover_text("check if the search should be filtered");
 
-                if resp_chk_filtered.clicked() {
-                    // todo: this needs to enable/disable filter and regex chk
-                    MessageDialog::new()
-                        .set_type(MessageType::Info)
-                        .set_title("checkbox status change")
-                        .set_text(&format!("chk_filtered state: {}", self.state_chk_filtered_search))
-                        .show_alert()
-                        .unwrap();
+                if self.state_chk_filtered_search {
+                    ui.separator();
+                    ui.checkbox(&mut self.state_chk_regex_filter, "regex?").on_hover_text("check if the filter should be interpreted as a regular expression");
+                    ui.text_edit_singleline(&mut self.state_txt_filter).on_hover_text("text to filter the search by");
                 }
-
-                resp_chk_filtered.on_hover_text("check if the search should be filtered");
-                resp_chk_regex.on_hover_text("check if the filter should be interpreted as a regular expression");
-                resp_txt_filter.on_hover_text("text to filter the search by");
             });
         });
     }
