@@ -10,8 +10,14 @@ multi-threaded desktop file search built with Rust.
 	</tr>
 	<tr>
 		<td>0.1.x</td>
-		<td>in development</td>
+		<td>create the main window</td>
 		<td>08-29-2024</td>
+		<td>09-06-2024</td>
+	</tr>
+	<tr>
+		<td>0.2.x</td>
+		<td>add window controls</td>
+		<td>09-06-2024</td>
 		<td></td>
 	</tr>
 </table>
@@ -20,6 +26,7 @@ multi-threaded desktop file search built with Rust.
 * [x] windowing: winit
 * [x] child windows (for each search): ~~Winit can handle this part~~ egui
 * [x] controls: ~~find a library that handles controls, cross platform~~ egui
+* [ ] add mouse-over tooltips for various input options
 * [ ] threading library?
 
 ---
