@@ -114,6 +114,8 @@ impl eframe::App for TextHunter {
                     ui.text_edit_singleline(&mut self.state_txt_filter).on_hover_text("text to filter the search by");
                 }
             });
+
+            ui.add(egui::Separator::default());
         });
     }
 }
