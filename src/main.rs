@@ -61,9 +61,9 @@ impl eframe::App for TextHunter {
                 let resp_chk_search_fc = ui.checkbox(&mut self.state_chk_search_filecontents, "contents?");
                 let resp_chk_search_fn = ui.checkbox(&mut self.state_chk_search_filenames, "names?");
                 ui.separator();
-                let resp_state_chk_regex = ui.checkbox(&mut self.state_chk_regex, "regex?");
+                let resp_chk_regex = ui.checkbox(&mut self.state_chk_regex, "regex?");
                 ui.separator();
-                let resp_state_chk_case_sensitive = ui.checkbox(&mut self.state_chk_case_sensitive, "case-sensitive?");
+                let resp_chk_case_sensitive = ui.checkbox(&mut self.state_chk_case_sensitive, "case-sensitive?");
                 ui.separator();
                 let resp_btn_search = ui.add(egui::Button::new("Search!"));
 
@@ -79,15 +79,15 @@ impl eframe::App for TextHunter {
                 resp_txt_search_str.on_hover_text("the string to search for");
                 resp_chk_search_fc.on_hover_text("check if file contents should be searched");
                 resp_chk_search_fn.on_hover_text("check if file names should be searched");
-                resp_state_chk_regex.on_hover_text("check if search string should be treated as a regular expression");
-                resp_state_chk_case_sensitive.on_hover_text("check if search string character case should be matched");
+                resp_chk_regex.on_hover_text("check if search string should be treated as a regular expression");
+                resp_chk_case_sensitive.on_hover_text("check if search string character case should be matched");
                 resp_btn_search.on_hover_text("launch the search; all input fields will be cleared");
             });
 
             ui.horizontal(|ui| {
                 let resp_lbl_name = ui.label("In Path:");
                 let resp_txt_path = ui.add_enabled(false, egui::TextEdit::singleline(&mut self.state_txt_search_path)).labelled_by(resp_lbl_name.id);
-                let resp_state_chk_subdirs = ui.checkbox(&mut self.state_chk_subdirs, "subdirs?");
+                let resp_chk_subdirs = ui.checkbox(&mut self.state_chk_subdirs, "subdirs?");
                 ui.separator();
                 let resp_btn_browse = ui.add(egui::Button::new("Browse..."));
 
@@ -101,15 +101,15 @@ impl eframe::App for TextHunter {
                 }
 
                 resp_txt_path.on_hover_text("path in which to search; update this path by clicking on the browse... button");
-                resp_state_chk_subdirs.on_hover_text("check if subdirectories should also be searched");
+                resp_chk_subdirs.on_hover_text("check if subdirectories should also be searched");
                 resp_btn_browse.on_hover_text("select a path to search within");
             });
 
             ui.horizontal(|ui| {
                 let resp_chk_filtered = ui.checkbox(&mut self.state_chk_filtered_search, "filtered?");
                 ui.separator();
-                let resp_state_chk_regex = ui.checkbox(&mut self.state_chk_regex_filter, "regex filter?");// todo: this should be disabled; enabled when state_chk_filtered_search is checked
-                let resp_state_txt_filter = ui.text_edit_singleline(&mut self.state_txt_filter);// todo: this should be disabled; enabled when state_chk_filtered_search is checked
+                let resp_chk_regex = ui.checkbox(&mut self.state_chk_regex_filter, "regex filter?");// todo: this should be disabled; enabled when state_chk_filtered_search is checked
+                let resp_txt_filter = ui.text_edit_singleline(&mut self.state_txt_filter);// todo: this should be disabled; enabled when state_chk_filtered_search is checked
 
                 if resp_chk_filtered.clicked() {
                     // todo: this needs to enable/disable filter and regex chk
@@ -122,8 +122,8 @@ impl eframe::App for TextHunter {
                 }
 
                 resp_chk_filtered.on_hover_text("check if the search should be filtered");
-                resp_state_chk_regex.on_hover_text("check if the filter should be interpreted as a regular expression");
-                resp_state_txt_filter.on_hover_text("text to filter the search by");
+                resp_chk_regex.on_hover_text("check if the filter should be interpreted as a regular expression");
+                resp_txt_filter.on_hover_text("text to filter the search by");
             });
         });
     }
