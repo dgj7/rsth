@@ -18,36 +18,36 @@ fn main() -> eframe::Result {
 }
 
 struct TextHunter {
-    txt_search_string: String,
-    chk_search_filecontents: bool,
-    chk_search_filenames: bool,
-    chk_regex: bool,
-    chk_case_sensitive: bool,
+    state_txt_search_string: String,
+    state_chk_search_filecontents: bool,
+    state_chk_search_filenames: bool,
+    state_chk_regex: bool,
+    state_chk_case_sensitive: bool,
 
-    txt_search_path: String,
-    chk_subdirs: bool,
+    state_txt_search_path: String,
+    state_chk_subdirs: bool,
 
-    chk_filtered_search: bool,
-    chk_regex_filter: bool,
-    txt_filter: String,
+    state_chk_filtered_search: bool,
+    state_chk_regex_filter: bool,
+    state_txt_filter: String,
 
 }
 
 impl Default for TextHunter {
     fn default() -> Self {
         Self {
-            txt_search_string: "".to_owned(),
-            chk_search_filecontents: true,
-            chk_search_filenames: true,
-            chk_regex: false,
-            chk_case_sensitive: false,
+            state_txt_search_string: "".to_owned(),
+            state_chk_search_filecontents: true,
+            state_chk_search_filenames: true,
+            state_chk_regex: false,
+            state_chk_case_sensitive: false,
 
-            txt_search_path: "".to_owned(),
-            chk_subdirs: false,
+            state_txt_search_path: "".to_owned(),
+            state_chk_subdirs: false,
 
-            chk_filtered_search: false,
-            chk_regex_filter: false,
-            txt_filter: "".to_owned(),
+            state_chk_filtered_search: false,
+            state_chk_regex_filter: false,
+            state_txt_filter: "".to_owned(),
         }
     }
 }
@@ -56,18 +56,18 @@ impl eframe::App for TextHunter {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.horizontal(|ui| {
-                let ilbl_name = ui.label("Search for:");
-                let itxt_search_str = ui.text_edit_singleline(&mut self.txt_search_string).labelled_by(ilbl_name.id);
-                let ichk_search_fc = ui.checkbox(&mut self.chk_search_filecontents, "contents?");
-                let ichk_search_fn = ui.checkbox(&mut self.chk_search_filenames, "names?");
+                let resp_lbl_name = ui.label("Search for:");
+                let resp_txt_search_str = ui.text_edit_singleline(&mut self.state_txt_search_string).labelled_by(resp_lbl_name.id);
+                let resp_chk_search_fc = ui.checkbox(&mut self.state_chk_search_filecontents, "contents?");
+                let resp_chk_search_fn = ui.checkbox(&mut self.state_chk_search_filenames, "names?");
                 ui.separator();
-                let ichk_regex = ui.checkbox(&mut self.chk_regex, "regex?");
+                let resp_state_chk_regex = ui.checkbox(&mut self.state_chk_regex, "regex?");
                 ui.separator();
-                let ichk_case_sensitive = ui.checkbox(&mut self.chk_case_sensitive, "case-sensitive?");
+                let resp_state_chk_case_sensitive = ui.checkbox(&mut self.state_chk_case_sensitive, "case-sensitive?");
                 ui.separator();
-                let ibtn_search = ui.add(egui::Button::new("Search!"));
+                let resp_btn_search = ui.add(egui::Button::new("Search!"));
 
-                if ibtn_search.clicked() {
+                if resp_btn_search.clicked() {
                     MessageDialog::new()
                         .set_type(MessageType::Info)
                         .set_title("Todo: implement search")
@@ -76,22 +76,22 @@ impl eframe::App for TextHunter {
                         .unwrap();
                 }
 
-                ichk_search_fc.on_hover_text("check if file contents should be searched");
-                itxt_search_str.on_hover_text("the string to search for");
-                ichk_search_fn.on_hover_text("check if file names should be searched");
-                ichk_regex.on_hover_text("check if search string should be treated as a regular expression");
-                ichk_case_sensitive.on_hover_text("check if search string character case should be matched");
-                ibtn_search.on_hover_text("launch the search; all input fields will be cleared");
+                resp_txt_search_str.on_hover_text("the string to search for");
+                resp_chk_search_fc.on_hover_text("check if file contents should be searched");
+                resp_chk_search_fn.on_hover_text("check if file names should be searched");
+                resp_state_chk_regex.on_hover_text("check if search string should be treated as a regular expression");
+                resp_state_chk_case_sensitive.on_hover_text("check if search string character case should be matched");
+                resp_btn_search.on_hover_text("launch the search; all input fields will be cleared");
             });
 
             ui.horizontal(|ui| {
-                let ilbl_name = ui.label("In Path:");
-                let itxt_path = ui.add_enabled(false, egui::TextEdit::singleline(&mut self.txt_search_path)).labelled_by(ilbl_name.id);
-                let ichk_subdirs = ui.checkbox(&mut self.chk_subdirs, "subdirs?");
+                let resp_lbl_name = ui.label("In Path:");
+                let resp_txt_path = ui.add_enabled(false, egui::TextEdit::singleline(&mut self.state_txt_search_path)).labelled_by(resp_lbl_name.id);
+                let resp_state_chk_subdirs = ui.checkbox(&mut self.state_chk_subdirs, "subdirs?");
                 ui.separator();
-                let ibtn_browse = ui.add(egui::Button::new("Browse..."));
+                let resp_btn_browse = ui.add(egui::Button::new("Browse..."));
 
-                if ibtn_browse.clicked() {
+                if resp_btn_browse.clicked() {
                     MessageDialog::new()
                             .set_type(MessageType::Info)
                             .set_title("Todo: implement browse")
@@ -100,30 +100,30 @@ impl eframe::App for TextHunter {
                             .unwrap();
                 }
 
-                itxt_path.on_hover_text("path in which to search; update this path by clicking on the browse... button");
-                ichk_subdirs.on_hover_text("check if subdirectories should also be searched");
-                ibtn_browse.on_hover_text("select a path to search within");
+                resp_txt_path.on_hover_text("path in which to search; update this path by clicking on the browse... button");
+                resp_state_chk_subdirs.on_hover_text("check if subdirectories should also be searched");
+                resp_btn_browse.on_hover_text("select a path to search within");
             });
 
             ui.horizontal(|ui| {
-                let ichk_filtered = ui.checkbox(&mut self.chk_filtered_search, "filtered?");
+                let resp_chk_filtered = ui.checkbox(&mut self.state_chk_filtered_search, "filtered?");
                 ui.separator();
-                let ichk_regex = ui.checkbox(&mut self.chk_regex_filter, "regex filter?");// todo: this should be disabled; enabled when chk_filtered_search is checked
-                let itxt_filter = ui.text_edit_singleline(&mut self.txt_filter);// todo: this should be disabled; enabled when chk_filtered_search is checked
+                let resp_state_chk_regex = ui.checkbox(&mut self.state_chk_regex_filter, "regex filter?");// todo: this should be disabled; enabled when state_chk_filtered_search is checked
+                let resp_state_txt_filter = ui.text_edit_singleline(&mut self.state_txt_filter);// todo: this should be disabled; enabled when state_chk_filtered_search is checked
 
-                if ichk_filtered.clicked() {
+                if resp_chk_filtered.clicked() {
                     // todo: this needs to enable/disable filter and regex chk
                     MessageDialog::new()
                         .set_type(MessageType::Info)
                         .set_title("checkbox status change")
-                        .set_text(&format!("format state: {}", self.chk_filtered_search))
+                        .set_text(&format!("chk_filtered state: {}", self.state_chk_filtered_search))
                         .show_alert()
                         .unwrap();
                 }
 
-                ichk_filtered.on_hover_text("check if the search should be filtered");
-                ichk_regex.on_hover_text("check if the filter should be interpreted as a regular expression");
-                itxt_filter.on_hover_text("text to filter the search by");
+                resp_chk_filtered.on_hover_text("check if the search should be filtered");
+                resp_state_chk_regex.on_hover_text("check if the filter should be interpreted as a regular expression");
+                resp_state_txt_filter.on_hover_text("text to filter the search by");
             });
         });
     }
