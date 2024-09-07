@@ -79,7 +79,9 @@ impl eframe::App for TextHunter {
 
             ui.horizontal(|ui| {
                 let ilbl_name = ui.label("In Path:");
-                let itxt_path = ui.text_edit_singleline(&mut self.txt_search_path).labelled_by(ilbl_name.id);// todo: this should be disabled
+                //let itxt_path = ui.add_enabled(false, &mut self.txt_search_path);
+                let itxt_path = ui.add_enabled(false, egui::TextEdit::singleline(&mut self.txt_search_path)).labelled_by(ilbl_name.id);
+                //let itxt_path = ui.text_edit_singleline(&mut self.txt_search_path).labelled_by(ilbl_name.id);// todo: this should be disabled
                 let ichk_subdirs = ui.checkbox(&mut self.chk_subdirs, "subdirs?");
                 ui.separator();
                 let ibtn_browse = ui.add(egui::Button::new("Borwse..."));
