@@ -1,10 +1,10 @@
 [package]
 name = "text-hunter"
-version = "0.1.2"
+version = "0.2.0"
 authors = ["dave garcia <garciad48879@gmail.com>"]
 edition = "2021"
 rust-version = "1.76"
 publish = false
 
 [dependencies]
-winit = "0.28.0"
+eframe = "0.28.1"

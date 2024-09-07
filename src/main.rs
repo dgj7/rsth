@@ -1,34 +1,36 @@
-#![windows_subsystem = "windows"]
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window
 
-use winit::{event_loop::EventLoop, event::WindowEvent};
-use winit::window::WindowBuilder;
+use eframe::egui;
 
-fn main() {
-    let event_loop = EventLoop::new();
-    let _window = WindowBuilder::new()
-        .with_title("TextHunter")
-        .with_theme(Some(winit::window::Theme::Dark))
-        .with_inner_size(winit::dpi::LogicalSize::new(800.0, 600.0))
-        .with_resizable(true)
-        .build(&event_loop)
-        .unwrap();
-    //window.set_maximized(true);
+fn main() -> eframe::Result {
+    let options = eframe::NativeOptions {
+        viewport: egui::ViewportBuilder::default()
+            .with_inner_size([800.0, 600.0]),
+            ..Default::default()
+    };
 
-    event_loop.run(move | event, _, control_flow| {
-        *control_flow = winit::event_loop::ControlFlow::Poll;
+    eframe::run_native("TextHunter", options, Box::new(|_cc| {
+        Ok(Box::<TextHunter>::default())
+    }),
+        )
+}
 
-        match event {
-            winit::event::Event::WindowEvent { event, .. } => match event {
-                WindowEvent::KeyboardInput { input, .. } => {
-                    match input.virtual_keycode {
-                        Some(winit::event::VirtualKeyCode::Escape) => *control_flow = winit::event_loop::ControlFlow::Exit,
-                        _ => (),
-                    }
-                },
-                WindowEvent::CloseRequested => *control_flow = winit::event_loop::ControlFlow::Exit,
-                _ => (),
-            },
-            _ => (),
+struct TextHunter {
+    //
+}
+
+impl Default for TextHunter {
+    fn default() -> Self {
+        Self {
+            // set TextHunter fields here
         }
-    });
+    }
+}
+
+impl eframe::App for TextHunter {
+    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        egui::CentralPanel::default().show(ctx, |ui| {
+            ui.heading("TextHunter");
+        });
+    }
 }
